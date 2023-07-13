@@ -10,7 +10,9 @@ const game = new Game(new UserInterface(), new RemoteInterface(connection));
 game.start();
 
 // Step 1: Send "Move: up" as soon as you connect
-// connection.write("Move: up");
+connection.on("connect", () => {
+  connection.write("Move: up");
+});
 
 // Step 2: Sending multiple successive move messages
 // connection.write("Move: up");
