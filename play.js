@@ -9,27 +9,23 @@ const connection = connect();
 const game = new Game(new UserInterface(), new RemoteInterface(connection));
 game.start();
 
-// Step 1: Send "Move: up" as soon as you connect
-connection.on("connect", () => {
-  connection.write("Move: up");
-});
+// Setup interface to handle user input from stdin
+const setupInput = function () {
+  const stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.setEncoding("utf8");
+  stdin.resume();
+  return stdin;
+};
 
-// Step 2: Sending multiple successive move messages
-// connection.write("Move: up");
-// connection.write("Move: down");
+// Create a function to handle user input
+const handleUserInput = function (key) {
+  if (key === '\u0003') {
+    // Terminate the game when CTRL + C is pressed
+    process.exit();
+  }
+};
 
-// Step 3: Delaying move messages using setTimeout
-// const moves = ["up", "down", "left", "right"];
-// moves.forEach((direction, index) => {
-//   setTimeout(() => {
-//     connection.write(`Move: ${direction}`);
-//   }, index * 50);
-// });
-
-// Step 4: Continually moving the snake using setInterval
-// setInterval(() => {
-//   connection.write("Move: up");
-// }, 50);
-
-// Step 5: Comment out or remove the hard-coded move message
-// connection.write("Move: up"); // Commented out or removed
+// Register the handleUserInput function as the "data" callback handler for stdin
+const stdin = setupInput();
+stdin.on("data", handleUserInput);
