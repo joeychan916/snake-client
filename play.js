@@ -2,6 +2,7 @@ const { Game } = require('./src/Game');
 const { UserInterface } = require('./src/UserInterface');
 const { RemoteInterface } = require('./src/RemoteInterface');
 const { connect } = require('./client');
+const { setupInput } = require('./input');
 
 console.log("Connecting ...");
 const connection = connect();
@@ -10,13 +11,7 @@ const game = new Game(new UserInterface(), new RemoteInterface(connection));
 game.start();
 
 // Setup interface to handle user input from stdin
-const setupInput = function () {
-  const stdin = process.stdin;
-  stdin.setRawMode(true);
-  stdin.setEncoding("utf8");
-  stdin.resume();
-  return stdin;
-};
+const stdin = setupInput();
 
 // Create a function to handle user input
 const handleUserInput = function (key) {
@@ -27,5 +22,4 @@ const handleUserInput = function (key) {
 };
 
 // Register the handleUserInput function as the "data" callback handler for stdin
-const stdin = setupInput();
 stdin.on("data", handleUserInput);
