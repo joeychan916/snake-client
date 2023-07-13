@@ -1,7 +1,3 @@
-#!/usr/bin/env node
-
-process.stdout.write('\x07');
-
 const { Game } = require('./src/Game');
 const { UserInterface } = require('./src/UserInterface');
 const { RemoteInterface } = require('./src/RemoteInterface');
