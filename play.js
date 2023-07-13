@@ -11,7 +11,7 @@ const game = new Game(new UserInterface(), new RemoteInterface(connection));
 game.start();
 
 // Setup interface to handle user input from stdin
-const stdin = setupInput();
+const stdin = setupInput(connection);
 
 // Create a function to handle user input
 const handleUserInput = function (key) {
