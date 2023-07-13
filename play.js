@@ -1,18 +1,33 @@
-// Import necessary modules and functions
-const { Game } = require('./src/Game');                   // Import the Game class from './src/Game'
-const { UserInterface } = require('./src/UserInterface'); // Import the UserInterface class from './src/UserInterface'
-const { RemoteInterface } = require('./src/RemoteInterface'); // Import the RemoteInterface class from './src/RemoteInterface'
-const { connect } = require('./client');                  // Import the connect function from './client'
+const { Game } = require('./src/Game');
+const { UserInterface } = require('./src/UserInterface');
+const { RemoteInterface } = require('./src/RemoteInterface');
+const { connect } = require('./client');
 
-// Print a message to indicate the connection process
 console.log("Connecting ...");
-
-// Connect to the server using the connect function
 const connection = connect();
 
-// Create a new instance of the Game class
-// Pass UserInterface and RemoteInterface instances, along with the connection, to the Game constructor
 const game = new Game(new UserInterface(), new RemoteInterface(connection));
-
-// Start the game
 game.start();
+
+// Step 1: Send "Move: up" as soon as you connect
+// connection.write("Move: up");
+
+// Step 2: Sending multiple successive move messages
+// connection.write("Move: up");
+// connection.write("Move: down");
+
+// Step 3: Delaying move messages using setTimeout
+// const moves = ["up", "down", "left", "right"];
+// moves.forEach((direction, index) => {
+//   setTimeout(() => {
+//     connection.write(`Move: ${direction}`);
+//   }, index * 50);
+// });
+
+// Step 4: Continually moving the snake using setInterval
+// setInterval(() => {
+//   connection.write("Move: up");
+// }, 50);
+
+// Step 5: Comment out or remove the hard-coded move message
+// connection.write("Move: up"); // Commented out or removed
