@@ -20,5 +20,14 @@ const connect = function () {
 console.log("Connecting ...");
 const connection = connect();
 
+connection.on("connect", () => {
+  console.log("Successfully connected to the server!");
+});
+
+connection.on("data", (data) => {
+  console.log("Server says:", data);
+});
+
 const game = new Game(new UserInterface(), new RemoteInterface(connection));
 game.start();
+
